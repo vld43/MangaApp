@@ -7,12 +7,11 @@
     tools:context=".ui.bookmarks.BookmarksFragment"
     android:id="@+id/bookmarks_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="BOOKMARKS FRAGMENT"
-        android:textSize="32sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
