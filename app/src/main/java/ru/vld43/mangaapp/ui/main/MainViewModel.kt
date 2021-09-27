@@ -1,4 +1,4 @@
-package ru.vld43.mangaapp.ui
+package ru.vld43.mangaapp.ui.main
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
