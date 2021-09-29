@@ -8,4 +8,5 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
                 manga.transform()
             }
         }
+
 }

@@ -5,14 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.vld43.mangaapp.R
 import ru.vld43.mangaapp.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
-    lateinit var viewModel: MainViewModel
-    lateinit var binding: FragmentMainBinding
+    private lateinit var viewModel: MainViewModel
+    private lateinit var binding: FragmentMainBinding
+
+    private val adapter = EasyAdapter()
+    private val controller = MangaController {
+        Toast.makeText(activity, it.title, Toast.LENGTH_SHORT)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,5 +34,16 @@ class MainFragment : Fragment() {
         binding = FragmentMainBinding.inflate(layoutInflater, container, false)
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initRecycler()
+    }
+
+    private fun initRecycler() {
+        binding.mangaRv.adapter = adapter
+        binding.mangaRv.layoutManager = LinearLayoutManager(activity)
     }
 }
