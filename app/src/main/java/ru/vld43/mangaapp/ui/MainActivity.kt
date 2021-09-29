@@ -2,6 +2,7 @@ package ru.vld43.mangaapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -10,6 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.vld43.mangaapp.R
 
 class MainActivity : AppCompatActivity() {
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,5 +28,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfigurations)
         navView.setupWithNavController(navController)
+
+        Log.i("qq", "onCreate: ")
     }
 }
