@@ -5,9 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import ru.vld43.mangaapp.R
+import ru.vld43.mangaapp.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
+
+    lateinit var viewModel: MainViewModel
+    lateinit var binding: FragmentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,8 +21,10 @@ class MainFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+    ): View {
+        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+
+        return binding.root
     }
 }
