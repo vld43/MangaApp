@@ -9,6 +9,9 @@ object ApiConstants {
     const val GET_MANGA = "manga/{id}"
     const val GET_COVERS = "cover"
     const val GET_COVER = "cover/{id}"
+    const val SEARCH_MANGA = BASE_URL
 
     const val COVER_SIZE = ".512.jpg"
+
+    const val SEARCH_QUERY_TITLE_PARAMETER = "title"
 }

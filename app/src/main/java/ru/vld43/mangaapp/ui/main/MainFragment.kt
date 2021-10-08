@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.vld43.mangaapp.databinding.FragmentMainBinding
+import java.util.concurrent.TimeUnit
 
 class MainFragment : Fragment() {
 
@@ -21,9 +25,7 @@ class MainFragment : Fragment() {
         Toast.makeText(activity, it.manga.title, Toast.LENGTH_SHORT)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private val disposables = CompositeDisposable()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +44,32 @@ class MainFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onDestroy() {
+        disposables.dispose()
+        super.onDestroy()
+    }
+
     private fun initRecycler() {
         binding.mangaRv.adapter = adapter
         binding.mangaRv.layoutManager = LinearLayoutManager(activity)
+    }
+
+    private fun initSearchView() {
+        disposables.add(Observable.create<String> {
+            binding.mangaSv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(text: String) = false
+
+                override fun onQueryTextChange(text: String): Boolean {
+                    it.onNext(text)
+                    return false
+                }
+            })
+        }
+            .filter {it.isNotEmpty()}
+            .debounce (300, TimeUnit.MILLISECONDS)
+            .subscribe {
+
+            })
     }
 
     private fun observeViewModel() {
