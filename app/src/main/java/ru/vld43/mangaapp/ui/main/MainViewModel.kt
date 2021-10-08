@@ -9,7 +9,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import ru.vld43.mangaapp.App
 import ru.vld43.mangaapp.data.MangaRepository
-import ru.vld43.mangaapp.domain.Manga
+import ru.vld43.mangaapp.domain.DataManga
 import javax.inject.Inject
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
@@ -18,7 +18,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var mangaRepository: MangaRepository
 
     private val disposables = CompositeDisposable()
-    val liveData = MutableLiveData<List<Manga>>()
+    val liveData = MutableLiveData<List<DataManga>>()
+
+    companion object {
+        const val TAG = "MainViewModel"
+    }
 
     init {
         App.appComponent.inject(this)
@@ -35,10 +39,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             mangaRepository.getMangaList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    liveData.value = it
+                .subscribe({ mangaList ->
+                    liveData.value = mangaList
                 }, {
-                    Log.i("MainViewModel", "$it")
+                    Log.i(TAG, "$it")
                 })
         )
     }

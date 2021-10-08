@@ -13,9 +13,21 @@ data class MangaResponse(
     fun transform(): Manga {
         relationships.map {
             if (it.type == "cover_art") {
-                return Manga(id, mangaAttributes.description.en, it.id, mangaAttributes.title.en)
+                return Manga(
+                    id,
+                    mangaAttributes.description.en,
+                    it.id,
+                    mangaAttributes.title.en
+                )
             }
         }
-        return Manga(id, mangaAttributes.description.en, null, mangaAttributes.title.en)
+
+        return Manga(
+            id,
+            mangaAttributes.description.en,
+            null,
+            mangaAttributes.title.en
+        )
+
     }
 }
