@@ -16,13 +16,14 @@ interface MangaDexApi {
     @GET(GET_MANGA_LIST)
     fun getMangaList(): Single<MangaListResponse>
 
-    @GET(GET_COVER)
-    fun getCover(
-        @Path("id") id: String
-    ): Single<CoverResponse>
-
     @GET(SEARCH_MANGA)
     fun searchManga(
         @Query(SEARCH_QUERY_TITLE_PARAMETER) query: String
+    ): Single<MangaListResponse>
+
+
+    @GET(GET_COVER)
+    fun getCover(
+        @Path("id") id: String
     ): Single<CoverResponse>
 }
