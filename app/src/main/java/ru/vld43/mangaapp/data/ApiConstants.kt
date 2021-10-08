@@ -6,7 +6,9 @@ object ApiConstants {
     const val COVER_URL = "https://uploads.mangadex.org/covers/"
 
     const val GET_MANGA_LIST = "manga"
-    const val GET_VIEW_MANGA = "manga/"
-    const val GET_COVER_ART_LIST = "cover"
-    const val GET_COVER = "cover/"
+    const val GET_MANGA = "manga/{id}"
+    const val GET_COVERS = "cover"
+    const val GET_COVER = "cover/{id}"
+
+    const val COVER_SIZE = ".512.jpg"
 }

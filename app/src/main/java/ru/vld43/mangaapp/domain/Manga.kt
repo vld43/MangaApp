@@ -5,6 +5,6 @@ import java.io.Serializable
 data class Manga(
     val id: String,
     val description: String,
-    val coverArtId: String?,
+    val coverId: String?,
     val title: String
 ) : Serializable
