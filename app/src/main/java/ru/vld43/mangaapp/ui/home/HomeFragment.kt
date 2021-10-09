@@ -1,6 +1,7 @@
-package ru.vld43.mangaapp.ui.main
+package ru.vld43.mangaapp.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import ru.surfstudio.android.easyadapter.EasyAdapter
-import ru.vld43.mangaapp.databinding.FragmentMainBinding
+import ru.vld43.mangaapp.databinding.FragmentHomeBinding
 import java.util.concurrent.TimeUnit
 
-class MainFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var binding: FragmentMainBinding
+    private lateinit var viewModel: HomeViewModel
+    private lateinit var binding: FragmentHomeBinding
 
     private val adapter = EasyAdapter()
     private val controller = MangaController {
@@ -31,8 +32,8 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-        binding = FragmentMainBinding.inflate(layoutInflater, container, false)
+        viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }
@@ -41,6 +42,7 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecycler()
+        initSearchView()
         observeViewModel()
     }
 
@@ -51,13 +53,18 @@ class MainFragment : Fragment() {
 
     private fun initRecycler() {
         binding.mangaRv.adapter = adapter
+        // ToDo Переделать в GridLayoutManager
         binding.mangaRv.layoutManager = LinearLayoutManager(activity)
+
     }
 
     private fun initSearchView() {
         disposables.add(Observable.create<String> {
             binding.mangaSv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(text: String) = false
+                override fun onQueryTextSubmit(text: String): Boolean {
+                    it.onNext(text)
+                    return false
+                }
 
                 override fun onQueryTextChange(text: String): Boolean {
                     it.onNext(text)
@@ -65,10 +72,11 @@ class MainFragment : Fragment() {
                 }
             })
         }
-            .filter {it.isNotEmpty()}
-            .debounce (300, TimeUnit.MILLISECONDS)
+            .filter { it.isNotEmpty() }
+            .debounce(300, TimeUnit.MILLISECONDS)
             .subscribe {
-
+                viewModel.searchManga(it)
+                Log.i("qq", "$it: ")
             })
     }
 

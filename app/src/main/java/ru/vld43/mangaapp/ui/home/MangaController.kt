@@ -1,4 +1,4 @@
-package ru.vld43.mangaapp.ui.main
+package ru.vld43.mangaapp.ui.home
 
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -10,9 +10,7 @@ import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 import ru.vld43.mangaapp.R
 import ru.vld43.mangaapp.data.ApiConstants.COVER_SIZE
 import ru.vld43.mangaapp.data.ApiConstants.COVER_URL
-import ru.vld43.mangaapp.domain.Cover
 import ru.vld43.mangaapp.domain.DataManga
-import ru.vld43.mangaapp.domain.Manga
 
 class MangaController(
     private val onClickListener: (DataManga) -> Unit
@@ -38,7 +36,7 @@ class MangaController(
             this.dataManga = dataManga
             if (dataManga.manga.coverId != null) {
                 Picasso.get()
-                    .load(COVER_URL + "/" + dataManga.manga.id + "/" + dataManga.imageName)
+                    .load(COVER_URL + "/" + dataManga.manga.id + "/" + dataManga.imageName + COVER_SIZE)
                     .into(coverArt)
             }
 

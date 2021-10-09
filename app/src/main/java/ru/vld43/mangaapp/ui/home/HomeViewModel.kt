@@ -1,4 +1,4 @@
-package ru.vld43.mangaapp.ui.main
+package ru.vld43.mangaapp.ui.home
 
 import android.app.Application
 import android.util.Log
@@ -12,7 +12,7 @@ import ru.vld43.mangaapp.data.MangaRepository
 import ru.vld43.mangaapp.domain.DataManga
 import javax.inject.Inject
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     @Inject
     lateinit var mangaRepository: MangaRepository
@@ -41,6 +41,20 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ mangaList ->
                     liveData.value = mangaList
+                }, {
+                    Log.i(TAG, "$it")
+                })
+        )
+    }
+
+    fun searchManga(query: String) {
+        disposables.add(
+            mangaRepository.searchManga(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ mangaList ->
+                    liveData.value = mangaList
+                    Log.i(TAG, query)
                 }, {
                     Log.i(TAG, "$it")
                 })
