@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="ru.vld43.mangaapp.ui.main.MainFragment"
+        android:name="ru.vld43.mangaapp.ui.home.HomeFragment"
         android:label="fragment_main"
-        tools:layout="@layout/fragment_main" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_bookmarks"
