@@ -1,4 +1,4 @@
-package ru.vld43.mangaapp.ui
+package ru.vld43.mangaapp.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

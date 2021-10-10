@@ -17,6 +17,8 @@
         <entry key="..\:/MangaApp/app/src/main/res/layout/fragment_nav2.xml" value="0.259375" />
         <entry key="..\:/MangaApp/app/src/main/res/layout/item_manga.xml" value="0.17236753856472167" />
         <entry key="..\:/MangaApp/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.259375" />
+        <entry key="..\:/MangaApp/app/src/main/res/menu/main_bottom_navigation_menu.xml" value="0.259375" />
+        <entry key="..\:/MangaApp/app/src/main/res/menu/manga_details_bottom_navigation_menu.xml" value="0.259375" />
         <entry key="..\:/MangaApp/app/src/main/res/menu/search_view_menu.xml" value="0.259375" />
       </map>
     </option>

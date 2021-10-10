@@ -1,5 +1,6 @@
 package ru.vld43.mangaapp.ui.home
 
+import android.content.Intent
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
@@ -7,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,16 +15,22 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.vld43.mangaapp.databinding.FragmentHomeBinding
+import ru.vld43.mangaapp.domain.DataManga
+import ru.vld43.mangaapp.ui.manga_details.MangaDetailsActivity
 import java.util.concurrent.TimeUnit
 
 class HomeFragment : Fragment() {
+
+    private companion object {
+        const val MANGA_EXTRA = "manga"
+    }
 
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
 
     private val adapter = EasyAdapter()
     private val controller = MangaController {
-        Toast.makeText(activity, it.manga.title, Toast.LENGTH_SHORT).show()
+        openMangaDetailsScreen(it)
     }
 
     private val disposables = CompositeDisposable()
@@ -61,8 +67,6 @@ class HomeFragment : Fragment() {
             ORIENTATION_LANDSCAPE ->
                 binding.mangaRv.layoutManager = GridLayoutManager(activity, 5)
         }
-
-
     }
 
     private fun initSearchView() {
@@ -84,5 +88,11 @@ class HomeFragment : Fragment() {
         viewModel.liveData.observe(viewLifecycleOwner) {
             adapter.setData(it, controller)
         }
+    }
+
+    private fun openMangaDetailsScreen(dataManga: DataManga) {
+        val intent = Intent(activity, MangaDetailsActivity::class.java)
+        intent.putExtra(MANGA_EXTRA, dataManga)
+        startActivity(intent)
     }
 }
