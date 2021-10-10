@@ -6,4 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.manga_details.MangaDetailsActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/details_bnv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/windowBackground"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/manga_details_bottom_navigation_menu" />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/details_navigation_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@+id/details_bnv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/details_nav_graph" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

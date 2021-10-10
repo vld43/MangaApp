@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/details_nav_graph"
+    app:startDestination="@id/navigation_description">
+
+    <fragment
+        android:id="@+id/navigation_description"
+        android:name="ru.vld43.mangaapp.ui.description.DescriptionFragment"
+        android:label="fragment_main"
+        tools:layout="@layout/fragment_description" />
+
+    <fragment
+        android:id="@+id/navigation_chapters"
+        android:name="ru.vld43.mangaapp.ui.chapters.ChaptersFragment"
+        android:label="fragment_bool_marks"
+        tools:layout="@layout/fragment_chapters" />
+
+</navigation>
