@@ -18,8 +18,11 @@
         android:closeIcon="@drawable/ic_close"
         android:iconifiedByDefault="false"
         android:queryHint="@string/querry_hint"
+        android:queryBackground="@color/search_background"
         android:searchIcon="@drawable/ic_search"
         app:layout_constraintTop_toTopOf="parent"
+        app:showAsAction="always"
+        tools:context=".SearchActivity"
         tools:layout_editor_absoluteX="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView

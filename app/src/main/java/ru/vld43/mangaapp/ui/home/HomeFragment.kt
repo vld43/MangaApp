@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -23,7 +24,7 @@ class HomeFragment : Fragment() {
 
     private val adapter = EasyAdapter()
     private val controller = MangaController {
-        Toast.makeText(activity, it.manga.title, Toast.LENGTH_SHORT)
+        Toast.makeText(activity, it.manga.title, Toast.LENGTH_SHORT).show()
     }
 
     private val disposables = CompositeDisposable()
@@ -61,10 +62,7 @@ class HomeFragment : Fragment() {
     private fun initSearchView() {
         disposables.add(Observable.create<String> {
             binding.mangaSv.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(text: String): Boolean {
-                    it.onNext(text)
-                    return false
-                }
+                override fun onQueryTextSubmit(text: String) = false
 
                 override fun onQueryTextChange(text: String): Boolean {
                     it.onNext(text)
@@ -72,12 +70,8 @@ class HomeFragment : Fragment() {
                 }
             })
         }
-            .filter { it.isNotEmpty() }
             .debounce(300, TimeUnit.MILLISECONDS)
-            .subscribe {
-                viewModel.searchManga(it)
-                Log.i("qq", "$it: ")
-            })
+            .subscribe { viewModel.searchManga(it) })
     }
 
     private fun observeViewModel() {
