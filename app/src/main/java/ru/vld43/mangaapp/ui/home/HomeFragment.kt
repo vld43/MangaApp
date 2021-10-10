@@ -10,6 +10,7 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -54,8 +55,7 @@ class HomeFragment : Fragment() {
 
     private fun initRecycler() {
         binding.mangaRv.adapter = adapter
-        // ToDo Переделать в GridLayoutManager
-        binding.mangaRv.layoutManager = LinearLayoutManager(activity)
+        binding.mangaRv.layoutManager = GridLayoutManager(activity, 3)
 
     }
 

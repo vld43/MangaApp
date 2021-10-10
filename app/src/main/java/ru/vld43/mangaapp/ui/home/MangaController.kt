@@ -22,7 +22,7 @@ class MangaController(
         private val card: CardView = itemView.findViewById(R.id.manga_cv)
         private val coverArt: ImageView = itemView.findViewById(R.id.manga_cover_art_iv)
         private val title: TextView = itemView.findViewById(R.id.manga_title_tv)
-        private val description: TextView = itemView.findViewById(R.id.manga_description_tv)
+        //private val description: TextView = itemView.findViewById(R.id.manga_description_tv)
 
         lateinit var dataManga: DataManga
 
@@ -41,7 +41,7 @@ class MangaController(
             }
 
             title.text = dataManga.manga.title
-            description.text = dataManga.manga.description
+            //description.text = dataManga.manga.description
         }
     }
 
