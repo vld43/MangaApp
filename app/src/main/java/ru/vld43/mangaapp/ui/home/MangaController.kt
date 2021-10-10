@@ -1,5 +1,6 @@
 package ru.vld43.mangaapp.ui.home
 
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -16,13 +17,18 @@ class MangaController(
     private val onClickListener: (DataManga) -> Unit
 ) : BindableItemController<DataManga, MangaController.Holder>() {
 
+    private companion object {
+        const val MAX_TEXT_SIZE = 20
+        const val START_INDEX = 0
+        const val ELLIPSIS = "..."
+    }
+
     inner class Holder(parent: ViewGroup) :
         BindableViewHolder<DataManga>(parent, R.layout.item_manga) {
 
         private val card: CardView = itemView.findViewById(R.id.manga_cv)
         private val coverArt: ImageView = itemView.findViewById(R.id.manga_cover_art_iv)
         private val title: TextView = itemView.findViewById(R.id.manga_title_tv)
-        private val description: TextView = itemView.findViewById(R.id.manga_description_tv)
 
         lateinit var dataManga: DataManga
 
@@ -40,8 +46,13 @@ class MangaController(
                     .into(coverArt)
             }
 
-            title.text = dataManga.manga.title
-            description.text = dataManga.manga.description
+            if (dataManga.manga.title.length > MAX_TEXT_SIZE) {
+                val viewTitle =
+                    dataManga.manga.title.substring(START_INDEX, MAX_TEXT_SIZE) + ELLIPSIS
+                title.text = viewTitle
+            } else {
+                title.text = dataManga.manga.title
+            }
         }
     }
 

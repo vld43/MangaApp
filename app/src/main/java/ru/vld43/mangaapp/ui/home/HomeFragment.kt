@@ -1,16 +1,16 @@
 package ru.vld43.mangaapp.ui.home
 
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import ru.surfstudio.android.easyadapter.EasyAdapter
@@ -42,7 +42,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initRecycler()
+        activity?.resources?.configuration?.let { initRecycler(it.orientation) }
         initSearchView()
         observeViewModel()
     }
@@ -52,10 +52,16 @@ class HomeFragment : Fragment() {
         super.onDestroy()
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(orientation: Int) {
         binding.mangaRv.adapter = adapter
-        // ToDo Переделать в GridLayoutManager
-        binding.mangaRv.layoutManager = LinearLayoutManager(activity)
+
+        when (orientation) {
+            ORIENTATION_PORTRAIT ->
+                binding.mangaRv.layoutManager = GridLayoutManager(activity, 3)
+            ORIENTATION_LANDSCAPE ->
+                binding.mangaRv.layoutManager = GridLayoutManager(activity, 5)
+        }
+
 
     }
 
