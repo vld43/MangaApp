@@ -16,6 +16,7 @@ class App : Application() {
 
         appComponent = DaggerAppComponent.builder()
             .appModule(AppModule(applicationContext))
+            //.sharedPreferencesModule(SharedPreferencesModule(this))
             .build()
     }
 

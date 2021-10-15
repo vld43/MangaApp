@@ -1,63 +1,53 @@
 package ru.vld43.mangaapp.ui.home
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import ru.vld43.mangaapp.App
 import ru.vld43.mangaapp.data.MangaRepository
+import ru.vld43.mangaapp.data.MangaStore
 import ru.vld43.mangaapp.domain.DataManga
+import ru.vld43.mangaapp.domain.extensions.applySchedulers
 import javax.inject.Inject
+
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     @Inject
     lateinit var mangaRepository: MangaRepository
 
-    private val disposables = CompositeDisposable()
-    val liveData = MutableLiveData<List<DataManga>>()
+    @Inject
+    lateinit var manga: MangaStore
 
-    companion object {
-        const val TAG = "MainViewModel"
-    }
+    private val disposables = CompositeDisposable()
+
+    val mangaListState = PublishRelay.create<List<DataManga>>()
+    val searchMangaAction = PublishRelay.create<String>()
 
     init {
         App.appComponent.inject(this)
-        loadManga()
     }
 
-    override fun onCleared() {
+    fun onStart() {
+        disposables.addAll(
+            loadManga(),
+            observeSearch()
+        )
+    }
+
+    fun onStop() {
         disposables.dispose()
-        super.onCleared()
     }
 
-    fun loadManga() {
-        disposables.add(
-            mangaRepository.getMangaList()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ mangaList ->
-                    liveData.value = mangaList
-                }, {
-                    Log.i(TAG, "$it")
-                })
-        )
-    }
+    private fun loadManga() =
+        mangaRepository.getMangaList()
+            .applySchedulers()
+            .subscribe(mangaListState::accept)
 
-    fun searchManga(query: String) {
-        disposables.add(
-            mangaRepository.searchManga(query)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ mangaList ->
-                    liveData.value = mangaList
-                    Log.i(TAG, query)
-                }, {
-                    Log.i(TAG, "$it")
-                })
-        )
-    }
+    private fun observeSearch() =
+        searchMangaAction
+            .flatMapSingle(mangaRepository::searchManga)
+            .applySchedulers()
+            .subscribe(mangaListState::accept)
 }

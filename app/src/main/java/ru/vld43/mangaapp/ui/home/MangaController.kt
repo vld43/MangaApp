@@ -1,6 +1,5 @@
 package ru.vld43.mangaapp.ui.home
 
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -14,7 +13,7 @@ import ru.vld43.mangaapp.data.ApiConstants.COVER_URL
 import ru.vld43.mangaapp.domain.DataManga
 
 class MangaController(
-    private val onClickListener: (DataManga) -> Unit
+    private val onClickListener: () -> Unit
 ) : BindableItemController<DataManga, MangaController.Holder>() {
 
     private companion object {
@@ -34,7 +33,7 @@ class MangaController(
 
         init {
             card.setOnClickListener {
-                onClickListener(dataManga)
+                onClickListener()
             }
         }
 
@@ -42,7 +41,7 @@ class MangaController(
             this.dataManga = dataManga
             if (dataManga.manga.coverId != null) {
                 Picasso.get()
-                    .load(COVER_URL + "/" + dataManga.manga.id + "/" + dataManga.imageName + COVER_SIZE)
+                    .load("$COVER_URL/${dataManga.manga.id}/${dataManga.imageName}$COVER_SIZE")
                     .into(coverArt)
             }
 
