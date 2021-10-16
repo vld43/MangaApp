@@ -8,7 +8,11 @@ import javax.inject.Inject
 class ActivityNavigator @Inject constructor(private val context: Context) {
 
     fun openMangaDetailsScreen() {
-        val intent = Intent(context, MangaDetailsActivity::class.java)
+        val intent = Intent(
+            context,
+            MangaDetailsActivity::class.java
+        )
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
 
