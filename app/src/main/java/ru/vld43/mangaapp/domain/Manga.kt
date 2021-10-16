@@ -6,5 +6,5 @@ data class Manga(
     val id: String,
     val description: String,
     val coverId: String?,
-    val title: String
+    val title: String?
 ) : Serializable

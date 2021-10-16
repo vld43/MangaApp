@@ -1,8 +1,8 @@
 package ru.vld43.mangaapp
 
 import android.app.Application
-import ru.vld43.mangaapp.di.AppComponent
-import ru.vld43.mangaapp.di.AppModule
+import ru.vld43.mangaapp.di.app.AppComponent
+import ru.vld43.mangaapp.di.app.AppModule
 import ru.vld43.mangaapp.di.DaggerAppComponent
 
 class App : Application() {

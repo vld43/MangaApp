@@ -11,7 +11,7 @@ object ApiConstants {
     const val GET_COVER = "cover/{id}"
     const val SEARCH_MANGA = "https://api.mangadex.org/manga"
 
-    const val COVER_SIZE = ".512.jpg"
+    const val COVER_SIZE = ".256.jpg"
 
     const val SEARCH_QUERY_TITLE_PARAMETER = "title"
 }

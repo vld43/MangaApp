@@ -4,7 +4,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.jakewharton.rxrelay2.PublishRelay
 import com.squareup.picasso.Picasso
+import io.reactivex.Observable
 import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 import ru.vld43.mangaapp.R
@@ -13,7 +15,7 @@ import ru.vld43.mangaapp.data.ApiConstants.COVER_URL
 import ru.vld43.mangaapp.domain.DataManga
 
 class MangaController(
-    private val onClickListener: () -> Unit
+    val onMangaClick: (DataManga) -> Unit
 ) : BindableItemController<DataManga, MangaController.Holder>() {
 
     private companion object {
@@ -21,6 +23,8 @@ class MangaController(
         const val START_INDEX = 0
         const val ELLIPSIS = "..."
     }
+
+    val openDescriptionAction = PublishRelay.create<DataManga>()
 
     inner class Holder(parent: ViewGroup) :
         BindableViewHolder<DataManga>(parent, R.layout.item_manga) {
@@ -33,7 +37,9 @@ class MangaController(
 
         init {
             card.setOnClickListener {
-                onClickListener()
+                onMangaClick(dataManga)
+//                openDescriptionAction.accept(dataManga)
+//                onClickListener(Observable.just(dataManga))
             }
         }
 
@@ -45,13 +51,16 @@ class MangaController(
                     .into(coverArt)
             }
 
-            if (dataManga.manga.title.length > MAX_TEXT_SIZE) {
-                val viewTitle =
-                    dataManga.manga.title.substring(START_INDEX, MAX_TEXT_SIZE) + ELLIPSIS
-                title.text = viewTitle
-            } else {
-                title.text = dataManga.manga.title
-            }
+            if (dataManga.manga.title != null) {
+
+                if (dataManga.manga.title.length > MAX_TEXT_SIZE) {
+                    val viewTitle =
+                        dataManga.manga.title.substring(START_INDEX, MAX_TEXT_SIZE) + ELLIPSIS
+                    title.text = viewTitle
+                } else {
+                    title.text = dataManga.manga.title
+                }
+            } else title.text = ""
         }
     }
 

@@ -1,4 +1,4 @@
-package ru.vld43.mangaapp.di
+package ru.vld43.mangaapp.di.app
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -12,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.vld43.mangaapp.data.ApiConstants.BASE_URL
 import ru.vld43.mangaapp.data.MangaDexApi
 import ru.vld43.mangaapp.data.MangaRepository
-import ru.vld43.mangaapp.data.MangaStore
 import javax.inject.Singleton
 
 
@@ -21,7 +20,7 @@ class AppModule(private val context: Context) {
 
     @Provides
     @Singleton
-    fun provideContext() = context
+    fun provideContext(): Context = context
 
     @Provides
     @Singleton
