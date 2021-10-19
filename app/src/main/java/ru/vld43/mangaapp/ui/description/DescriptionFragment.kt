@@ -47,25 +47,16 @@ class DescriptionFragment : Fragment() {
         initViews()
     }
 
-//    override fun onDestroy() {
-//        mangaStore.removeManga()
-//        super.onDestroy()
-//    }
-
-//    override fun onStop() {
-//        mangaStore.removeManga()
-//        super.onStop()
-//    }
-
     private fun initViews() {
-        //val dataManga = activity?.intent?.getSerializableExtra(MANGA_DESCRIPTION) as? DataManga
         val dataManga: DataManga = mangaStore.getManga()
-            Picasso.get()
-                .load(
-                    ApiConstants.COVER_URL + "/" +
-                            dataManga.manga.id + "/" +
-                            dataManga.imageName
-                )
-                .into(binding.coverArtIv)
+        Picasso.get()
+            .load(
+                ApiConstants.COVER_URL + "/" +
+                        dataManga.manga.id + "/" +
+                        dataManga.imageName
+            )
+            .into(binding.coverArtIv)
+        binding.mangaTitleTv.text = dataManga.manga.title
+        binding.mangaDescriptionTv.text = dataManga.manga.description
     }
 }
