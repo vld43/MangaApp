@@ -9,7 +9,8 @@ object ApiConstants {
     const val GET_MANGA = "manga/{id}"
     const val GET_COVERS = "cover"
     const val GET_COVER = "cover/{id}"
-    const val SEARCH_MANGA = "https://api.mangadex.org/manga"
+    const val SEARCH_MANGA = "$BASE_URL/manga"
+    const val GET_MANGA_CHAPTERS = "$BASE_URL/{id}/aggregate"
 
     const val COVER_SIZE = ".256.jpg"
 
