@@ -14,7 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MangaApp">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.manga_details.MangaDetailsActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

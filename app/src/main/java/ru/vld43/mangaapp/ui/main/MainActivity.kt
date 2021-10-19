@@ -1,25 +1,31 @@
-package ru.vld43.mangaapp.ui
+package ru.vld43.mangaapp.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.navigation.findNavController
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.vld43.mangaapp.R
+import ru.vld43.mangaapp.di.activity.ActivityModule
+import ru.vld43.mangaapp.di.activity.DaggerActivityComponent
 
 class MainActivity : AppCompatActivity() {
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+//        DaggerActivityComponent.builder()
+//            .activityModule(ActivityModule(this))
+//            .build()
+//            .inject(this)
+
         val navView: BottomNavigationView = findViewById(R.id.main_bnv)
-        val navController = findNavController(R.id.navigation_host_fragment)
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.main_navigation_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
         val appBarConfigurations = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
@@ -28,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfigurations)
         navView.setupWithNavController(navController)
-
-        Log.i("qq", "onCreate: ")
     }
+
+
 }

@@ -17,7 +17,7 @@
         android:background="@drawable/shape_search_view"
         android:closeIcon="@drawable/ic_close"
         android:iconifiedByDefault="false"
-        android:queryHint="@string/querry_hint"
+        android:queryHint="@string/query_hint"
         android:queryBackground="@color/search_background"
         android:searchIcon="@drawable/ic_search"
         app:layout_constraintTop_toTopOf="parent"
