@@ -15,7 +15,8 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             .flatMapSingle { manga ->
                 mangaDexApi.getCover(manga.coverId ?: "")
                     .map { DataManga(manga, it.coverData.coverAttributes.imageName) }
-            }.toList()
+            }
+            .toList()
 
     fun searchManga(query: String): Single<MutableList<DataManga>> =
         mangaDexApi.searchManga(query).map { mangaList ->
@@ -27,6 +28,7 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             .flatMapSingle { manga ->
                 mangaDexApi.getCover(manga.coverId ?: "")
                     .map { DataManga(manga, it.coverData.coverAttributes.imageName) }
-            }.toList()
+            }
+            .toList()
 
 }

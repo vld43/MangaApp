@@ -21,16 +21,6 @@ class DescriptionFragment : Fragment() {
     @Inject
     lateinit var mangaStore: MangaStore
 
-    companion object {
-        private const val MANGA_DESCRIPTION = "manga_description"
-
-        fun getNewInstance(args: Bundle?): DescriptionFragment {
-            val descriptionFragment = DescriptionFragment()
-            descriptionFragment.arguments = args
-            return descriptionFragment
-        }
-    }
-
     init {
         App.appComponent.inject(this)
     }
@@ -54,24 +44,28 @@ class DescriptionFragment : Fragment() {
 
 
         Log.i("qqq", "onViewCreated: ${mangaStore.getManga()}")
-        //initViews()
+        initViews()
     }
 
-//    private fun initViews() {
-//        //val dataManga = activity?.intent?.getSerializableExtra(MANGA_DESCRIPTION) as? DataManga
-//        val dataManga: DataManga? = arguments?.getSerializable(MANGA_DESCRIPTION) as? DataManga
-//        Log.i("qqq", "$dataManga")
-//        if (dataManga != null) {
-//            Picasso.get()
-//                .load(
-//                    ApiConstants.COVER_URL + "/" +
-//                            dataManga.manga.id + "/" +
-//                            dataManga.imageName +
-//                            ApiConstants.COVER_SIZE
-//                )
-//                .into(binding.descriptionMangaCoverArt)
-//            Log.i("qqq", "initViews: $dataManga.manga.id \n $dataManga.imageName")
-//        }
-//        Log.i("qqq", "initViews: $dataManga.manga.id \n $dataManga.imageName")
+//    override fun onDestroy() {
+//        mangaStore.removeManga()
+//        super.onDestroy()
 //    }
+
+//    override fun onStop() {
+//        mangaStore.removeManga()
+//        super.onStop()
+//    }
+
+    private fun initViews() {
+        //val dataManga = activity?.intent?.getSerializableExtra(MANGA_DESCRIPTION) as? DataManga
+        val dataManga: DataManga = mangaStore.getManga()
+            Picasso.get()
+                .load(
+                    ApiConstants.COVER_URL + "/" +
+                            dataManga.manga.id + "/" +
+                            dataManga.imageName
+                )
+                .into(binding.coverArtIv)
+    }
 }

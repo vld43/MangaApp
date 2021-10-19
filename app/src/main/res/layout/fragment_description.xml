@@ -8,12 +8,14 @@
     tools:context=".ui.description.DescriptionFragment">
 
     <ImageView
-        android:id="@+id/description_manga_cover_art"
+        android:id="@+id/cover_art_iv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="500dp"
         android:scaleType="centerCrop"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars"
         tools:ignore="ContentDescription" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

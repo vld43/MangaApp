@@ -1,8 +1,6 @@
 package ru.vld43.mangaapp.ui.home
 
-import android.app.Application
-import android.util.Log
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import com.jakewharton.rxrelay2.PublishRelay
 import io.reactivex.disposables.CompositeDisposable
 import ru.vld43.mangaapp.App
@@ -14,7 +12,7 @@ import ru.vld43.mangaapp.ui.navigation.ActivityNavigator
 import javax.inject.Inject
 
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class HomeViewModel : ViewModel() {
 
     @Inject
     lateinit var mangaRepository: MangaRepository
@@ -44,27 +42,32 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
         )
     }
 
-    fun onStop() {
+    override fun onCleared() {
+        super.onCleared()
         disposables.dispose()
     }
 
     private fun loadManga() =
         mangaRepository.getMangaList()
             .applySchedulers()
-            .subscribe({ mangaListState.accept(it) }, { Log.i("qq", "loadManga: $it") })
+            .subscribe(mangaListState::accept)
 
     private fun observeSearch() =
         searchMangaAction
-            .flatMapSingle(mangaRepository::searchManga)
-            .applySchedulers()
-            .subscribe({ mangaListState.accept(it) }, { Log.i("qq", "observeSearch: $it") })
+            .flatMapSingle {
+                mangaRepository.searchManga(it)
+                    .applySchedulers()
+            }
+            .subscribe {
+                mangaListState.accept(it)
+            }
 
     private fun saveManga() =
         saveMangaAction
             .applySchedulers()
-            .subscribe{
+            .subscribe {
                 mangaStore.saveManga(it)
-                activityNavigator.openMangaDetailsScreen()
+                //activityNavigator.openMangaDetailsScreen()
             }
 
 }

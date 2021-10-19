@@ -4,7 +4,6 @@ import android.content.Intent
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
 import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import ru.surfstudio.android.easyadapter.EasyAdapter
 import ru.vld43.mangaapp.databinding.FragmentHomeBinding
-import ru.vld43.mangaapp.domain.DataManga
 import ru.vld43.mangaapp.ui.manga_details.MangaDetailsActivity
 import java.util.concurrent.TimeUnit
 
@@ -31,7 +29,12 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
 
     private val adapter = EasyAdapter()
-    private val controller by lazy { MangaController(viewModel.saveMangaAction::accept) }
+    private val controller by lazy {
+        MangaController {
+            viewModel.saveMangaAction.accept(it)
+            startActivity(Intent(context, MangaDetailsActivity::class.java))
+        }
+    }
 
     private val disposables = CompositeDisposable()
 
@@ -39,18 +42,14 @@ class HomeFragment : Fragment() {
         super.onStart()
         viewModel.onStart()
 
-        //initSearchView()
-
         disposables.addAll(
-            initSearchView(),
-            observeMangaList()
+            observeMangaList(),
+            initSearchView()
         )
-
     }
 
-    override fun onStop() {
-        super.onStop()
-        viewModel.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         disposables.dispose()
     }
 
@@ -70,18 +69,7 @@ class HomeFragment : Fragment() {
 
         activity?.resources?.configuration?.let { initRecycler(it.orientation) }
 
-
-//        initialization()
     }
-
-//    private fun initialization() {
-//        //sharedPreferences = activity?.getSharedPreferences("test", Context.MODE_PRIVATE)!!
-//        val string = "test"
-//        val edit = sharedPreferences.edit()
-//        edit.putString("save_key", string)
-//        edit.apply()
-//        Log.i("qqq", "${sharedPreferences.getString("save_key", "nnnn")}")
-//    }
 
     private fun initRecycler(orientation: Int) {
         var spanCount = SPAN_COUNT_ORIENTATION_PORTRAIT
