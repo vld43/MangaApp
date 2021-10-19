@@ -21,7 +21,6 @@ interface MangaDexApi {
         @Query(SEARCH_QUERY_TITLE_PARAMETER) query: String
     ): Single<MangaListResponse>
 
-
     @GET(GET_COVER)
     fun getCover(
         @Path("id") id: String
