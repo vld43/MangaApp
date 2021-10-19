@@ -54,13 +54,8 @@ class HomeViewModel : ViewModel() {
 
     private fun observeSearch() =
         searchMangaAction
-            .flatMapSingle {
-                mangaRepository.searchManga(it)
-                    .applySchedulers()
-            }
-            .subscribe {
-                mangaListState.accept(it)
-            }
+            .flatMapSingle { mangaRepository.searchManga(it).applySchedulers() }
+            .subscribe(mangaListState::accept)
 
     private fun saveManga() =
         saveMangaAction

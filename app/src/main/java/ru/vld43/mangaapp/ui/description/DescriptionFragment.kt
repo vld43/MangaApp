@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavArgs
 import com.squareup.picasso.Picasso
+import io.reactivex.disposables.CompositeDisposable
 import ru.vld43.mangaapp.App
 import ru.vld43.mangaapp.data.ApiConstants
 import ru.vld43.mangaapp.data.MangaStore
@@ -18,15 +19,23 @@ import javax.inject.Inject
 
 class DescriptionFragment : Fragment() {
 
-    @Inject
-    lateinit var mangaStore: MangaStore
-
-    init {
-        App.appComponent.inject(this)
-    }
-
     private lateinit var viewModel: DescriptionViewModel
     private lateinit var binding: FragmentDescriptionBinding
+
+    private val disposables = CompositeDisposable()
+
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
+        disposables.addAll(
+            initViews()
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        disposables.dispose()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,22 +50,18 @@ class DescriptionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this)[DescriptionViewModel::class.java]
-
-
-        Log.i("qqq", "onViewCreated: ${mangaStore.getManga()}")
-        initViews()
     }
 
-    private fun initViews() {
-        val dataManga: DataManga = mangaStore.getManga()
-        Picasso.get()
-            .load(
-                ApiConstants.COVER_URL + "/" +
-                        dataManga.manga.id + "/" +
-                        dataManga.imageName
-            )
-            .into(binding.coverArtIv)
-        binding.mangaTitleTv.text = dataManga.manga.title
-        binding.mangaDescriptionTv.text = dataManga.manga.description
-    }
+    private fun initViews() =
+        viewModel.mangaState.subscribe { dataManga ->
+            Picasso.get()
+                .load(
+                    ApiConstants.COVER_URL + "/" +
+                            dataManga.manga.id + "/" +
+                            dataManga.imageName
+                )
+                .into(binding.coverArtIv)
+            binding.mangaTitleTv.text = dataManga.manga.title
+            binding.mangaDescriptionTv.text = dataManga.manga.description
+        }
 }
