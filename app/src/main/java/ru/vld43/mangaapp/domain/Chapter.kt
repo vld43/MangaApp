@@ -4,5 +4,8 @@ import java.io.Serializable
 
 data class Chapter(
     val id: String,
-    val title: String
+    val number: String,
+    val title: String,
+    val hash: String,
+    val data: List<String>
 ) : Serializable

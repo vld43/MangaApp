@@ -9,7 +9,7 @@ import ru.vld43.mangaapp.data.ApiConstants.GET_MANGA_CHAPTERS
 import ru.vld43.mangaapp.data.ApiConstants.GET_MANGA_LIST
 import ru.vld43.mangaapp.data.ApiConstants.SEARCH_MANGA
 import ru.vld43.mangaapp.data.ApiConstants.SEARCH_QUERY_TITLE_PARAMETER
-import ru.vld43.mangaapp.data.response.chapters.VolumesResponse
+import ru.vld43.mangaapp.data.response.chapters.ChaptersResponse
 import ru.vld43.mangaapp.data.response.cover.CoverResponse
 import ru.vld43.mangaapp.data.response.manga.MangaListResponse
 
@@ -31,5 +31,5 @@ interface MangaDexApi {
     @GET(GET_MANGA_CHAPTERS)
     fun getMangaChapters(
         @Path("id") mangaId: String
-    ): Single<VolumesResponse>
+    ): Single<ChaptersResponse>
 }
