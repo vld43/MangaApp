@@ -1,6 +1,5 @@
 package ru.vld43.mangaapp.data
 
-import io.reactivex.Observable
 import io.reactivex.Single
 import ru.vld43.mangaapp.domain.Chapter
 import ru.vld43.mangaapp.domain.DataManga
@@ -35,11 +34,9 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
 
     fun getMangaVolumes(mangaId: String): Single<List<Chapter>> =
         mangaDexApi
-            .getMangaChapters(mangaId)
-            .toObservable()
-            .flatMapIterable { it.volumeResponses }
-            .flatMapIterable { it.chapters }
-            .map { it.transform() }
-            .toList()
-
+            .getMangaChapters(mangaId).map { chapters ->
+                chapters.chapter.map { chapter ->
+                    chapter.transform()
+                }
+            }
 }

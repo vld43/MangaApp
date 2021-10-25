@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 import ru.vld43.mangaapp.domain.Chapter
 
 data class ChaptersResponse(
-    @SerializedName("data") val chapters: List<Chapter>
+    @SerializedName("data") val chapter: List<ChapterResponse>
 )
