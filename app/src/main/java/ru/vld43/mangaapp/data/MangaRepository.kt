@@ -20,15 +20,6 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             }
             .toList()
 
-    fun getMangaChapters(mangaId: String): Single<List<List<Chapter>>> =
-        mangaDexApi.getMangaChapters(mangaId).map { volumes ->
-            volumes.volumeResponses.map { volume ->
-                volume.chapters.map { chapter ->
-                    chapter.transform()
-                }
-            }
-        }
-
     fun searchManga(query: String): Single<MutableList<DataManga>> =
         mangaDexApi.searchManga(query).map { mangaList ->
             mangaList.manga.map { manga ->
@@ -42,5 +33,13 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             }
             .toList()
 
+    fun getMangaVolumes(mangaId: String): Single<List<Chapter>> =
+        mangaDexApi
+            .getMangaChapters(mangaId)
+            .toObservable()
+            .flatMapIterable { it.volumeResponses }
+            .flatMapIterable { it.chapters }
+            .map { it.transform() }
+            .toList()
 
 }

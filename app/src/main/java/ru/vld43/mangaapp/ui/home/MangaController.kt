@@ -24,8 +24,6 @@ class MangaController(
         const val ELLIPSIS = "..."
     }
 
-    val openDescriptionAction = PublishRelay.create<DataManga>()
-
     inner class Holder(parent: ViewGroup) :
         BindableViewHolder<DataManga>(parent, R.layout.item_manga) {
 
@@ -38,8 +36,6 @@ class MangaController(
         init {
             card.setOnClickListener {
                 onMangaClick(dataManga)
-//                openDescriptionAction.accept(dataManga)
-//                onClickListener(Observable.just(dataManga))
             }
         }
 
