@@ -4,6 +4,7 @@ import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
+import ru.vld43.mangaapp.data.ApiConstants.CHAPTERS_QUERY_TITLE_PARAMETER
 import ru.vld43.mangaapp.data.ApiConstants.GET_COVER
 import ru.vld43.mangaapp.data.ApiConstants.GET_MANGA_CHAPTERS
 import ru.vld43.mangaapp.data.ApiConstants.GET_MANGA_LIST
@@ -30,6 +31,6 @@ interface MangaDexApi {
 
     @GET(GET_MANGA_CHAPTERS)
     fun getMangaChapters(
-        @Path("id") mangaId: String
+        @Query(CHAPTERS_QUERY_TITLE_PARAMETER) mangaId: String
     ): Single<ChaptersResponse>
 }

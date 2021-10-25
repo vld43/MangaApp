@@ -4,9 +4,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
-import com.jakewharton.rxrelay2.PublishRelay
 import com.squareup.picasso.Picasso
-import io.reactivex.Observable
 import ru.surfstudio.android.easyadapter.controller.BindableItemController
 import ru.surfstudio.android.easyadapter.holder.BindableViewHolder
 import ru.vld43.mangaapp.R
@@ -20,7 +18,7 @@ class MangaController(
 
     private companion object {
         const val MAX_TEXT_SIZE = 20
-        const val START_INDEX = 0
+        const val START_TITLE_TRANSFORM_INDEX = 0
         const val ELLIPSIS = "..."
     }
 
@@ -51,7 +49,10 @@ class MangaController(
 
                 if (dataManga.manga.title.length > MAX_TEXT_SIZE) {
                     val viewTitle =
-                        dataManga.manga.title.substring(START_INDEX, MAX_TEXT_SIZE) + ELLIPSIS
+                        dataManga.manga.title.substring(
+                            START_TITLE_TRANSFORM_INDEX,
+                            MAX_TEXT_SIZE
+                        ) + ELLIPSIS
                     title.text = viewTitle
                 } else {
                     title.text = dataManga.manga.title

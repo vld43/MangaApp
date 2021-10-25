@@ -32,7 +32,7 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             }
             .toList()
 
-    fun getMangaVolumes(mangaId: String): Single<List<Chapter>> =
+    fun getChapters(mangaId: String): Single<List<Chapter>> =
         mangaDexApi
             .getMangaChapters(mangaId).map { chapters ->
                 chapters.chapter.map { chapter ->
