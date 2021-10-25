@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context=".ui.chapters.ChaptersFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chapter_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Список глав"
-        android:textSize="40sp"/>
+        android:layout_marginTop="8dp" />
 
 </FrameLayout>

@@ -1,6 +1,7 @@
 package ru.vld43.mangaapp.data
 
 import io.reactivex.Single
+import ru.vld43.mangaapp.domain.Chapter
 import ru.vld43.mangaapp.domain.DataManga
 
 class MangaRepository(private val mangaDexApi: MangaDexApi) {
@@ -31,4 +32,11 @@ class MangaRepository(private val mangaDexApi: MangaDexApi) {
             }
             .toList()
 
+    fun getChapters(mangaId: String): Single<List<Chapter>> =
+        mangaDexApi
+            .getMangaChapters(mangaId).map { chapters ->
+                chapters.chapter.map { chapter ->
+                    chapter.transform()
+                }
+            }
 }
